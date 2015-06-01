@@ -31,7 +31,7 @@ $config = array(
 $pninst = PhoneNumber::instance('415 599 2671', $config);
 ```
 
-##### PhoneNumber Object.
+#### PhoneNumber Object
 ```php
 echo $pninst->getPNObject()->getCountryCode();
 // Output: 1
@@ -52,7 +52,7 @@ echo $pninst->getCountryCodeSource();
 // Output: FROM_DEFAULT_COUNTRY
 ```
 
-##### Validation Results.
+#### Validation Results
 ```php
 echo $pninst->isPossibleNumber();
 // Output: TRUE
@@ -70,7 +70,7 @@ echo $pninst->getNumberType();
 // Output: FIXED_LINE_OR_MOBILE
 ```
 
-##### Formatting.
+#### Formatting
 ```php
 echo $pninst->formatE164();
 // Output: +14155992671
@@ -97,7 +97,7 @@ echo $pninst->formatOutOfCountryCallingNumber('FR');
 // Output: 00 1 415-599-2671
 ```
 
-##### ShortNumberInfo.
+#### ShortNumberInfo
 ```php
 echo $pninst->isPossibleShortNumber();
 // Output: FALSE
@@ -124,7 +124,7 @@ echo $pninst->connectsToEmergencyNumber();
 // Output: FALSE
 ```
 
-##### Example Numbers.
+#### Example Numbers
 ```php
 echo $pninst->getExampleNumber();
 // Output: +12015555555
@@ -136,19 +136,19 @@ echo $pninst->getExampleShortNumber();
 // Output: 911
 ```
 
-##### PhoneNumber Geocoder.
+#### PhoneNumber Geocoder
 ```php
 echo $pninst->getGeolocation();
 // Output: California
 ```
 
-##### PhoneNumber Carrier.
+#### PhoneNumber Carrier
 ```php
 echo $pninst->getCarrier();
 // Output: 
 ```
 
-##### PhoneNumber TimeZones.
+#### PhoneNumber TimeZones
 ```php
 echo $pninst->getTimeZones();
 // Output: America/Los_Angeles
