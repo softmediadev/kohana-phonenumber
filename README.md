@@ -21,7 +21,6 @@ $pninst = PhoneNumber::instance('415 599 2671');
 ```
 We can override the default configuration by passing a second parameter:
 ```php
-
 $config = array(
 	'country'	=> 'PA',
 	'language'	=> 'es',
