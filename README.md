@@ -2,7 +2,7 @@
 
 #### Installation
 
-Place the files in your modules directory.
+Place all files in your modules directory.
 
 Copy `MODPATH.menu/config/phonenumber.php` into `APPPATH/config/phonenumber.php` and customize.
 
@@ -18,6 +18,17 @@ Kohana::modules(array(
 We create an instance of the class
 ```php
 $pninst = PhoneNumber::instance('415 599 2671');
+```
+We can override the default configuration by passing a second parameter:
+```php
+
+$config = array(
+	'country'	=> 'PA',
+	'language'	=> 'es',
+	'region'	=> 'PA'
+);
+
+$pninst = PhoneNumber::instance('415 599 2671', $config);
 ```
 
 ##### PhoneNumber Object.
