@@ -10,7 +10,7 @@ class Kohana_PhoneNumber
 	protected $shortNumberInfo;
 	protected $phoneNumberGeocoder;
 
-	protected $phoneNumber;
+	protected $phoneNumber = NULL;
 	protected $phoneNumberRegion = NULL;
 	protected $phoneNumberType = NULL;
 	protected $validNumber = FALSE;
@@ -67,7 +67,7 @@ class Kohana_PhoneNumber
 		10 => 'UNKNOWN_COST'
 	);
 
-    public static function instance( $number, array $config = NULL )
+    public static function instance( $number = NULL, array $config = NULL )
     {
 		if ( ! isset(self::$instance))
 			self::$instance = new self($number, $config);
@@ -78,9 +78,6 @@ class Kohana_PhoneNumber
     public function __construct( $number, array $config = NULL )
     {
 		$this->number = $number;
-
-		if (empty($this->number))
-			throw new Kohana_Exception('Phone number is required');
 
 		$this->config = Kohana::$config->load('phonenumber')->as_array();
 
@@ -104,38 +101,40 @@ class Kohana_PhoneNumber
 		$this->config['language'] = empty($this->config['language']) ? 'en' : strtolower($this->config['language']);
 		$this->config['region'] = empty($this->config['region']) ? NULL : strtoupper($this->config['region']);
 
-
 		$this->phoneNumberUtil = \libphonenumber\PhoneNumberUtil::getInstance();
 		$this->shortNumberInfo = \libphonenumber\ShortNumberInfo::getInstance();
 		$this->phoneNumberGeocoder = \libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance();
 
-		try {
-			$this->phoneNumber = $this->phoneNumberUtil->parse($number, $this->config['country'], NULL, TRUE);
-			$this->possibleNumber = $this->phoneNumberUtil->isPossibleNumber($this->phoneNumber);
-			$this->isPossibleNumberWithReason = $this->phoneNumberUtil->isPossibleNumberWithReason($this->phoneNumber);
-			$this->validNumber = $this->phoneNumberUtil->isValidNumber($this->phoneNumber);
-			$this->validNumberForRegion = $this->phoneNumberUtil->isValidNumberForRegion($this->phoneNumber, $input['country']);
-			$this->phoneNumberRegion = $this->phoneNumberUtil->getRegionCodeForNumber($this->phoneNumber);
-			$this->phoneNumberType = $this->phoneNumberUtil->getNumberType($this->phoneNumber);
+		if ( ! empty($number))
+		{
+			try {
+				$this->phoneNumber = $this->phoneNumberUtil->parse($number, $this->config['country'], NULL, TRUE);
+				$this->possibleNumber = $this->phoneNumberUtil->isPossibleNumber($this->phoneNumber);
+				$this->isPossibleNumberWithReason = $this->phoneNumberUtil->isPossibleNumberWithReason($this->phoneNumber);
+				$this->validNumber = $this->phoneNumberUtil->isValidNumber($this->phoneNumber);
+				$this->validNumberForRegion = $this->phoneNumberUtil->isValidNumberForRegion($this->phoneNumber, $input['country']);
+				$this->phoneNumberRegion = $this->phoneNumberUtil->getRegionCodeForNumber($this->phoneNumber);
+				$this->phoneNumberType = $this->phoneNumberUtil->getNumberType($this->phoneNumber);
 
-			$this->geolocation = $this->phoneNumberGeocoder->getDescriptionForNumber(
-				$this->phoneNumber,
-				$this->config['language'],
-				$this->config['region']
-			);
+				$this->geolocation = $this->phoneNumberGeocoder->getDescriptionForNumber(
+					$this->phoneNumber,
+					$this->config['language'],
+					$this->config['region']
+				);
 
-			$this->phoneNumberToCarrierInfo = \libphonenumber\PhoneNumberToCarrierMapper::getInstance()->getNameForNumber(
-				$this->phoneNumber,
-				$this->config['language']
-			);
+				$this->phoneNumberToCarrierInfo = \libphonenumber\PhoneNumberToCarrierMapper::getInstance()->getNameForNumber(
+					$this->phoneNumber,
+					$this->config['language']
+				);
 
-			$this->timezone = \libphonenumber\PhoneNumberToTimeZonesMapper::getInstance()->getTimeZonesForNumber($this->phoneNumber);
-		} catch (\libphonenumber\NumberParseException $e) {
-			throw new Kohana_Exception(
-				$e->getMessage(),
-				NULL,
-				$e->getCode()
-			);
+				$this->timezone = \libphonenumber\PhoneNumberToTimeZonesMapper::getInstance()->getTimeZonesForNumber($this->phoneNumber);
+			} catch (\libphonenumber\NumberParseException $e) {
+				throw new Kohana_Exception(
+					':error',
+					array(':error' => $e->getMessage()),
+					$e->getCode()
+				);
+			}
 		}
 	}
 
