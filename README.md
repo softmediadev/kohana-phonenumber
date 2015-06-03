@@ -1,5 +1,9 @@
 ## libphonenumber for Kohana
 
+#### Requirements
+
+You must install the PHP extension intl and enable it in php.ini
+
 #### Installation
 
 Place all files in your modules directory.
