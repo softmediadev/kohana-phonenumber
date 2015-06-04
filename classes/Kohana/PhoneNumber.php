@@ -160,69 +160,82 @@ class Kohana_PhoneNumber
 
 	public function getCountryCodeSource()
 	{
-		return $this->countryCodeSource[$this->phoneNumber->getCountryCodeSource()];
+		if ($this->phoneNumber)
+			return $this->countryCodeSource[$this->phoneNumber->getCountryCodeSource()];
 	}
 
 	public function formatE164()
 	{
-		return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::E164);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::E164);
 	}
 
 	public function formatNational()
 	{
-		return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::NATIONAL);
 	}
 
 	public function formatInternational()
 	{
-		return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::INTERNATIONAL);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::INTERNATIONAL);
 	}
 
 	public function formatRFC3966()
 	{
-		return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::RFC3966);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->format($this->phoneNumber, \libphonenumber\PhoneNumberFormat::RFC3966);
 	}
 
 	public function formatInOriginalFormat()
 	{
-		return $this->phoneNumberUtil->formatInOriginalFormat($this->phoneNumber, $this->config['country']);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->formatInOriginalFormat($this->phoneNumber, $this->config['country']);
 	}
 
 	public function formatOutOfCountryCallingNumber($country)
 	{
 		$country = strtoupper($country);
 
-		return $this->phoneNumberUtil->formatOutOfCountryCallingNumber($this->phoneNumber, $country);
+		if ($this->phoneNumber)
+			return $this->phoneNumberUtil->formatOutOfCountryCallingNumber($this->phoneNumber, $country);
 	}
 
 	public function isPossibleShortNumber()
 	{
-		return $this->shortNumberInfo->isPossibleShortNumber($this->phoneNumber);
+		if ($this->phoneNumber)
+			return $this->shortNumberInfo->isPossibleShortNumber($this->phoneNumber);
 	}
 
 	public function isValidShortNumber()
 	{
-		return $this->shortNumberInfo->isValidShortNumber($this->phoneNumber);
+		if ($this->phoneNumber)
+			return $this->shortNumberInfo->isValidShortNumber($this->phoneNumber);
 	}
 
 	public function isPossibleShortNumberForRegion()
 	{
-		return $this->shortNumberInfo->isPossibleShortNumberForRegion($this->phoneNumber, $this->phoneNumberRegion);
+		if ($this->phoneNumber)
+			return $this->shortNumberInfo->isPossibleShortNumberForRegion($this->phoneNumber, $this->phoneNumberRegion);
 	}
 
 	public function isValidShortNumberForRegion()
 	{
-		return $this->shortNumberInfo->isValidShortNumberForRegion($this->phoneNumber, $this->phoneNumberRegion);
+		if ($this->phoneNumber)
+			return $this->shortNumberInfo->isValidShortNumberForRegion($this->phoneNumber, $this->phoneNumberRegion);
 	}
 
 	public function getExpectedCost()
 	{
-		return $this->expectedCost[$this->shortNumberInfo->getExpectedCost($this->phoneNumber)];
+		if ($this->phoneNumber)
+			return $this->expectedCost[$this->shortNumberInfo->getExpectedCost($this->phoneNumber)];
 	}
 
 	public function getExpectedCostForRegion()
 	{
-		return $this->expectedCostForRegion[$this->shortNumberInfo->getExpectedCostForRegion($this->phoneNumber, $this->phoneNumberRegion)];
+		if ($this->phoneNumber)
+			return $this->expectedCostForRegion[$this->shortNumberInfo->getExpectedCostForRegion($this->phoneNumber, $this->phoneNumberRegion)];
 	}
 
 	public function isEmergencyNumber()
