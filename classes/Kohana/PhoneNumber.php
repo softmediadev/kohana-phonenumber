@@ -112,7 +112,7 @@ class Kohana_PhoneNumber
 				$this->possibleNumber = $this->phoneNumberUtil->isPossibleNumber($this->phoneNumber);
 				$this->isPossibleNumberWithReason = $this->phoneNumberUtil->isPossibleNumberWithReason($this->phoneNumber);
 				$this->validNumber = $this->phoneNumberUtil->isValidNumber($this->phoneNumber);
-				$this->validNumberForRegion = $this->phoneNumberUtil->isValidNumberForRegion($this->phoneNumber, $input['country']);
+				$this->validNumberForRegion = $this->phoneNumberUtil->isValidNumberForRegion($this->phoneNumber, $this->config['country']);
 				$this->phoneNumberRegion = $this->phoneNumberUtil->getRegionCodeForNumber($this->phoneNumber);
 				$this->phoneNumberType = $this->phoneNumberUtil->getNumberType($this->phoneNumber);
 
