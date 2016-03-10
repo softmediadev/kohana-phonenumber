@@ -4,7 +4,6 @@ class Kohana_PhoneNumber
 {
 	protected $number;
 	protected $config;
-	protected static $instance;
 
 	protected $phoneNumberUtil;
 	protected $shortNumberInfo;
@@ -69,10 +68,7 @@ class Kohana_PhoneNumber
 
     public static function instance( $number = NULL, array $config = NULL )
     {
-		if ( ! isset(self::$instance))
-			self::$instance = new self($number, $config);
-
-		return self::$instance;
+		return new self($number, $config);
     }
 
     public function __construct( $number, array $config = NULL )
