@@ -6,7 +6,7 @@ You must install the PHP extension intl and enable it in php.ini
 
 #### Installation
 
-Place all files in your modules directory.
+Place config file in your modules directory.
 
 Copy `MODPATH.menu/config/phonenumber.php` into `APPPATH/config/phonenumber.php` and customize.
 
